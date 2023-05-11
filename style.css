@@ -135,11 +135,12 @@ main {
 }
 
 .status{
-  max-width: 270px;
+  width: 270px;
 }
 
 .titulo-filme{
   margin-bottom: 24px;
+  line-height: 22px;
 }
 
 .descricao-filme{
