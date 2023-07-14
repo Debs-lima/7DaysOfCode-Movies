@@ -3,8 +3,14 @@
   --azul-catalogo: #1D1C3B;
   --branco: #FFFFFF;
   --cinza: #ACACAC;
-  --cinza-placeholder: #8A8A8A;
+  --cinza-descricao: #8A8A8A;
   --lilas: #706EA8;
+  --background-pesquisa: #FFFFFF33;
+  --sombra: rgba(0, 0, 0, 0.2);
+}
+
+* {
+  font-family: 'Kumbh Sans', sans-serif;
 }
 
 body {
@@ -48,31 +54,23 @@ main {
 
 .label-presquisa {
   display: flex;
-  align-items: center;
-  background-color: var(--branco);
-  opacity: 0.25;
-  height: 74px;
-  gap: 4px;
+  margin: 0 auto;
+  padding: 0.5rem 1rem;
+  background-color: var(--background-pesquisa);
   border-radius: 8px;
+  cursor: pointer;
 }
 
 .input-pesquisa {
     outline-style: none;
     background-color: transparent;
-    height: 24px;
     border: none;
-    width: 80%;
-    margin: 26px 48px 26px 24px;
+    width: 100%;
+    height: 100%;
     font-size: 18px;
-    color: var(--cinza-placeholder);
+    color: var(--branco);
+    padding: 0.5rem 0;
     
-}
-
-::placeholder {
-  color: var(--cinza-placeholder);
-  font-family: 'Kumbh Sans', sans-serif;
-  font-weight: 500;
-  font-size: 18px;
 }
 
 .label-favoritos {
@@ -94,7 +92,7 @@ main {
 
 .label-favoritos > input:checked {
   border: 8px solid var(--lilas);
-  outline: 1px solid var(--cinza-placeholder); 
+  outline: 1px solid var(--cinza-descricao); 
 }
 
 /*Parte do catálogo de filmes*/
@@ -111,7 +109,7 @@ main {
   margin: 30px 40px;
   background-color: var(--azul-catalogo);
   border-radius: 8px;
-  box-shadow: 32.8387px 24.5482px 79px rgba(0, 0, 0, 0.15), 23.8851px 17.855px 53.2479px rgba(0, 0, 0, 0.121406), 16.6246px 12.4276px 34.4391px rgba(0, 0, 0, 0.10125), 10.9035px 8.15079px 21.3701px rgba(0, 0, 0, 0.0867188), 6.56775px 4.90965px 12.8375px rgba(0, 0, 0, 0.075), 3.46346px 2.58907px 7.6377px rgba(0, 0, 0, 0.0632813), 1.4367px 1.07399px 4.56719px rgba(0, 0, 0, 0.04875), 0.333519px 0.249318px 2.42246px rgba(0, 0, 0, 0.0285938);
+  box-shadow: 15px 10px 30px var(--sombra);
   font-size: 18px;
 }
 
@@ -122,9 +120,10 @@ main {
 
 .titulo-status{
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   align-items: center;
   width: 40%;
+  min-width: 290px;
 }
 
 .titulo-status ul{
@@ -135,7 +134,7 @@ main {
 }
 
 .status{
-  width: 270px;
+  max-width: 250px;
 }
 
 .titulo-filme{
@@ -145,7 +144,7 @@ main {
 
 .descricao-filme{
   display: flex;
-  max-width: 600px;
-  color: var(--cinza-placeholder);
+  max-width: 50%;
+  color: var(--cinza-descricao);
   line-height: 32px;
 }
