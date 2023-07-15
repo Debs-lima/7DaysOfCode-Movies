@@ -124,7 +124,7 @@ main {
   flex-wrap: nowrap;
   align-items: center;
   width: 40%;
-  min-width: 290px;
+  min-width: 350px;
 }
 
 .titulo-status ul{
@@ -148,6 +148,10 @@ main {
 .avaliacao img, 
 .favoritar img {
   width: 20px;
+}
+
+.status-lista span {
+  padding-left: 5px;
 }
 
 .descricao-filme{

@@ -86,7 +86,7 @@ function renderizarFilme(filme) {
   iconeCoracao.alt = favoritado ? 'Ícone de coração preenchido' : 'Ícone de coração vazio';
   favoritos.appendChild(iconeCoracao);
   const favoritar = document.createElement('span');
-  favoritar.textContent = favoritado ? 'Desfavoritar' : 'Favoritar';
+  favoritar.textContent = favoritado ? 'Favorito' : 'Favoritar';
   favoritos.appendChild(favoritar);
 
   const filmeDescricao = document.createElement('div');
