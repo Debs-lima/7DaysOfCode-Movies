@@ -114,6 +114,7 @@ main {
 }
 
 .cartaz-filme{
+  width: 140px;
   border-radius: 50%;
   margin: 30px 40px 30px 0;
 }
@@ -131,15 +132,22 @@ main {
   justify-content: space-between;
   flex-wrap: wrap;
   font-weight: 400;
+
 }
 
 .status{
   max-width: 250px;
+  width: 100%;
 }
 
 .titulo-filme{
   margin-bottom: 24px;
   line-height: 22px;
+}
+
+.avaliacao img, 
+.favoritar img {
+  width: 20px;
 }
 
 .descricao-filme{
