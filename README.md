@@ -24,3 +24,25 @@ Criar um índice de filmes populares, com a possibilidade de favoritá-lo! Nos m
 **Objetivo**
 <br>
 Replicar um layout do Figma com dados estáticos, como imagem, título, classificação, descrição, etc.
+
+### Dia 2
+<hr>
+
+**Tecnologias**
+- JavaScript
+<br>
+
+**Objetivo**
+<br>
+Criar dinamicamente os filmes através do JavaScript, manipulando o DOM.
+
+### Dia 3
+<hr>
+
+**Tecnologias**
+- JavaScript
+<br>
+
+**Objetivo**
+<br>
+Consumir a lista de filmes mais populares no momento, segundo a API do <a href="https://developer.themoviedb.org/reference/intro/getting-started">The Movie DataBase</a>.

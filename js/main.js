@@ -1,44 +1,25 @@
+import { apiKey } from "../environment/apiKey.js";
 const catalogo = document.querySelector('.catalogo-filmes');
 
-const filmes = [
-  {
-    cartaz: './images/duelo-de-titas.jpg',
-    titulo: 'Duelo de Titãs',
-    nota: 9.5,
-    ano: 2000,
-    descricao: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Tristique nulla aliquet enim tortor at auctor urna nunc. Vitae semper quis lectus nulla at volutpat.',
-    favoritado: true,
-  },
-  {
-    cartaz: './images/viva-a-vida-e-uma-festa.jpg',
-    titulo: 'Viva - A Vida é uma Festa',
-    nota: 9.4,
-    ano: 2017,
-    descricao: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Tristique nulla aliquet enim tortor at auctor urna nunc. Vitae semper quis lectus nulla at volutpat.',
-    favoritado: true,
-  },
-  {
-    cartaz: './images/o-pior-vizinho-do-mundo.jpg',
-    titulo: 'O Pior Vizinho do Mundo',
-    nota: 9.5,
-    ano: 2022,
-    descricao: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Tristique nulla aliquet enim tortor at auctor urna nunc. Vitae semper quis lectus nulla at volutpat.',
-    favoritado: true,
-  },
-  {
-    cartaz: './images/dungeons-dragons-honra-entre-rebeldes.jpg',
-    titulo: 'Dungeons & Dragons: Honra Entre Rebeldes',
-    nota: 9.0,
-    ano: 2023,
-    descricao: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Tristique nulla aliquet enim tortor at auctor urna nunc. Vitae semper quis lectus nulla at volutpat.',
-    favoritado: false,
-  },
-];
+async function pegarFilmesPopulares() {
+    const url = await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}`);
+    const { results } = await url.json();
+    return results;
+}
+
+console.log(pegarFilmesPopulares())
+
+window.onload = async function() {
+  const filmes = await pegarFilmesPopulares()
+  filmes.forEach(filme => renderizarFilme(filme))
+}
 
 function renderizarFilme(filme) {
   const {
-    cartaz, titulo, nota, ano, descricao, favoritado,
+    poster_path, title, vote_average, release_date, overview, 
   } = filme;
+  const favoritado = false;
+  const ano = release_date.substring(0,4);
 
   const filmeDoCatalogo = document.createElement('li');
   filmeDoCatalogo.classList.add('filme');
@@ -49,8 +30,8 @@ function renderizarFilme(filme) {
   filmeDoCatalogo.appendChild(filmeStatus);
 
   const imagemCartaz = document.createElement('img');
-  imagemCartaz.src = cartaz;
-  imagemCartaz.alt = `Cartaz do filme ${titulo}`;
+  imagemCartaz.src = `https://image.tmdb.org/t/p/w500/${poster_path}`;
+  imagemCartaz.alt = `Cartaz do filme ${title}`;
   imagemCartaz.classList.add('cartaz-filme');
   filmeStatus.appendChild(imagemCartaz);
 
@@ -60,7 +41,7 @@ function renderizarFilme(filme) {
 
   const tituloDoFilme = document.createElement('h2');
   tituloDoFilme.classList.add('titulo-filme');
-  tituloDoFilme.textContent = `${titulo} (${ano})`;
+  tituloDoFilme.textContent = `${title} (${ano})`;
   status.appendChild(tituloDoFilme);
 
   const listaStatus = document.createElement('ul');
@@ -75,7 +56,7 @@ function renderizarFilme(filme) {
   iconeEstrela.alt = 'Ícone de estrela';
   avaliacaoFilme.appendChild(iconeEstrela);
   const mediaAvaliacao = document.createElement('span');
-  mediaAvaliacao.textContent = nota;
+  mediaAvaliacao.textContent = vote_average;
   avaliacaoFilme.appendChild(mediaAvaliacao);
 
   const favoritos = document.createElement('li');
@@ -93,10 +74,7 @@ function renderizarFilme(filme) {
   filmeDescricao.classList.add('descricao-filme');
   filmeDoCatalogo.appendChild(filmeDescricao);
   const descricaoDoFilme = document.createElement('p');
-  descricaoDoFilme.textContent = descricao;
+  descricaoDoFilme.textContent = overview;
   filmeDescricao.appendChild(descricaoDoFilme);
 }
 
-window.onload = () => {
-  filmes.forEach((filme) => renderizarFilme(filme));
-};
