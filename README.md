@@ -41,8 +41,21 @@ Criar dinamicamente os filmes através do JavaScript, manipulando o DOM.
 
 **Tecnologias**
 - JavaScript
+- API externa
 <br>
 
 **Objetivo**
 <br>
 Consumir a lista de filmes mais populares no momento, segundo a API do <a href="https://developer.themoviedb.org/reference/intro/getting-started">The Movie DataBase</a>.
+
+### Dia 4
+<hr>
+
+**Tecnologias**
+- JavaScript
+- API externa
+<br>
+
+**Objetivo**
+<br>
+Trabalhar com a barra de pesquisa: usar a API para buscar filmes que correspondam ao input.

@@ -1,25 +1,55 @@
 import { apiKey } from "../environment/apiKey.js";
 const catalogo = document.querySelector('.catalogo-filmes');
+const pesquisaInput = document.querySelector('#pesquisa');
+const lupa = document.querySelector('.searchIcon');
 
+function limparCatalogo() {
+  catalogo.innerHTML = '';
+}
+
+/* LISTA POPULARES*/
 async function pegarFilmesPopulares() {
-    const url = await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}`);
-    const { results } = await url.json();
-    return results;
+  const url = await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}`);
+  const { results } = await url.json();
+  limparCatalogo();
+  return await results.forEach(filme => renderizarFilme(filme));
 }
 
-console.log(pegarFilmesPopulares())
-
-window.onload = async function() {
-  const filmes = await pegarFilmesPopulares()
-  filmes.forEach(filme => renderizarFilme(filme))
+window.onload = async function () {
+  pegarFilmesPopulares();
 }
 
+/* LISTA BUSCA*/
+
+async function buscaFilme() {
+  const input = pesquisaInput.value;
+  const url = await fetch(`https://api.themoviedb.org/3/search/movie?query=${input}&api_key=${apiKey}`);
+  const { results } = await url.json();
+  console.log(results);
+  limparCatalogo()
+  return await results.forEach(filme => renderizarFilme(filme))
+}
+
+lupa.addEventListener('click', async () => {
+  pesquisaInput.value != '' ? buscaFilme() : pegarFilmesPopulares()
+});
+
+pesquisaInput.addEventListener('keydown', async (key) => {
+  
+    if (key.keyCode === 13) {
+      pesquisaInput.value != '' ?
+      buscaFilme() :
+      pegarFilmesPopulares()
+    }
+});
+
+/*RENDERIZAR LISTA DE FILMES*/
 function renderizarFilme(filme) {
   const {
-    poster_path, title, vote_average, release_date, overview, 
+    poster_path, title, vote_average, release_date, overview,
   } = filme;
   const favoritado = false;
-  const ano = release_date.substring(0,4);
+  const ano = release_date.substring(0, 4);
 
   const filmeDoCatalogo = document.createElement('li');
   filmeDoCatalogo.classList.add('filme');
@@ -77,4 +107,6 @@ function renderizarFilme(filme) {
   descricaoDoFilme.textContent = overview;
   filmeDescricao.appendChild(descricaoDoFilme);
 }
+
+/*REALIZAR BUSCAS NAS LISTA*/
 
