@@ -25,7 +25,6 @@ async function buscaFilme() {
   const input = pesquisaInput.value;
   const url = await fetch(`https://api.themoviedb.org/3/search/movie?query=${input}&api_key=${apiKey}`);
   const { results } = await url.json();
-  console.log(results);
   limparCatalogo()
   return await results.forEach(filme => renderizarFilme(filme))
 }
@@ -35,20 +34,62 @@ lupa.addEventListener('click', async () => {
 });
 
 pesquisaInput.addEventListener('keydown', async (key) => {
-  
-    if (key.keyCode === 13) {
-      pesquisaInput.value != '' ?
-      buscaFilme() :
-      pegarFilmesPopulares()
-    }
+  if (key.keyCode === 13) {
+    pesquisaInput.value != '' ? buscaFilme() : pegarFilmesPopulares()
+  }
 });
+
+/* FAVORITAR */
+function alteraFavorito(evento, filme) {
+  if(ehFavorito(filme.id)) {
+    desfavoritar(evento, filme)
+  } else {
+    favoritar(evento, filme)
+  }
+}
+
+function desfavoritar(evento, filme) {
+    evento.target.src = './icons/Heart.svg'
+    removerDoLocalStorage(filme.id)
+}
+
+function favoritar(evento, filme) {
+  evento.target.src = './icons/heart-fill.svg'
+  salvarNoLocalStorage(filme)
+}
+
+/* LISTA DE FAVORITOS */
+function pegarFilmesFavoritos() {
+  return JSON.parse(localStorage.getItem('filmesFavoritos'))
+}
+
+function salvarNoLocalStorage(filme) {
+  const filmes = pegarFilmesFavoritos() || []
+  filmes.push(filme)
+  const filmesJSON = JSON.stringify(filmes)
+  localStorage.setItem('filmesFavoritos', filmesJSON)
+  console.log('fui chamada')
+}
+
+function ehFavorito(id) {
+  const listaFilmes = pegarFilmesFavoritos() || []
+  return listaFilmes.find(filme => filme.id == id)
+}
+
+function removerDoLocalStorage(id) {
+  const listaFilmes = pegarFilmesFavoritos() || []
+  const filmeAhRemover = listaFilmes.find(filme => filme.id == id)
+  const novaListaFilmes = listaFilmes.filter(filme => filme.id != filmeAhRemover.id)
+  localStorage.setItem('filmesFavoritos', JSON.stringify(novaListaFilmes))
+  console.log('fuichamado')
+}
 
 /*RENDERIZAR LISTA DE FILMES*/
 function renderizarFilme(filme) {
   const {
-    poster_path, title, vote_average, release_date, overview,
+    id, poster_path, title, vote_average, release_date, overview
   } = filme;
-  const favoritado = false;
+  const favoritado = ehFavorito(id);
   const ano = release_date.substring(0, 4);
 
   const filmeDoCatalogo = document.createElement('li');
@@ -97,8 +138,9 @@ function renderizarFilme(filme) {
   iconeCoracao.alt = favoritado ? 'Ícone de coração preenchido' : 'Ícone de coração vazio';
   favoritos.appendChild(iconeCoracao);
   const favoritar = document.createElement('span');
-  favoritar.textContent = favoritado ? 'Favorito' : 'Favoritar';
+  favoritar.textContent = 'Favorite';
   favoritos.appendChild(favoritar);
+  iconeCoracao.addEventListener('click', evento => alteraFavorito(evento, filme))
 
   const filmeDescricao = document.createElement('div');
   filmeDescricao.classList.add('descricao-filme');
@@ -108,5 +150,5 @@ function renderizarFilme(filme) {
   filmeDescricao.appendChild(descricaoDoFilme);
 }
 
-/*REALIZAR BUSCAS NAS LISTA*/
+
 

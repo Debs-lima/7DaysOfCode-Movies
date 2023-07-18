@@ -59,3 +59,14 @@ Consumir a lista de filmes mais populares no momento, segundo a API do <a href="
 **Objetivo**
 <br>
 Trabalhar com a barra de pesquisa: usar a API para buscar filmes que correspondam ao input.
+
+### Dia 5
+<hr>
+
+**Tecnologias**
+- JavaScript
+<br>
+
+**Objetivo**
+<br>
+Implementar a lógica de favoritar/desfavoritar um filme e salvar esses dados no Local Storage.
