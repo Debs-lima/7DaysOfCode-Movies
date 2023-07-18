@@ -2,6 +2,7 @@ import { apiKey } from "../environment/apiKey.js";
 const catalogo = document.querySelector('.catalogo-filmes');
 const pesquisaInput = document.querySelector('#pesquisa');
 const lupa = document.querySelector('.searchIcon');
+const checkbox = document.querySelector('#favoritos-apenas');
 
 function limparCatalogo() {
   catalogo.innerHTML = '';
@@ -68,7 +69,6 @@ function salvarNoLocalStorage(filme) {
   filmes.push(filme)
   const filmesJSON = JSON.stringify(filmes)
   localStorage.setItem('filmesFavoritos', filmesJSON)
-  console.log('fui chamada')
 }
 
 function ehFavorito(id) {
@@ -81,8 +81,21 @@ function removerDoLocalStorage(id) {
   const filmeAhRemover = listaFilmes.find(filme => filme.id == id)
   const novaListaFilmes = listaFilmes.filter(filme => filme.id != filmeAhRemover.id)
   localStorage.setItem('filmesFavoritos', JSON.stringify(novaListaFilmes))
-  console.log('fuichamado')
 }
+
+/* MOSTRAR APENAS OOS FAVORITOS */
+function meusFavoritos(evento) {
+  if(checkbox.checked) {
+    const listaFilmes = pegarFilmesFavoritos()
+    limparCatalogo();
+    listaFilmes.forEach(filme => renderizarFilme(filme));
+  } else {
+    limparCatalogo()
+    pegarFilmesPopulares()
+  }  
+}
+
+checkbox.addEventListener('change', evento => meusFavoritos(evento))
 
 /*RENDERIZAR LISTA DE FILMES*/
 function renderizarFilme(filme) {

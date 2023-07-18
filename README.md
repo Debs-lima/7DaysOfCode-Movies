@@ -5,7 +5,7 @@
 
 ## Objetivo
 <hr>
-Consumir uma API com JavaScript puro, ou seja, sem nenhum framework ou biblioteca externa. Trabalhar bastante com o conceito de manipulação da DOM e dinamismo da página. 
+Consumir uma API com JavaScript puro, ou seja, sem nenhum framework ou biblioteca externa. Trabalhar bastante com o conceito de manipulação do DOM e dinamismo da página. 
 
 ## Desafio
 <hr>
@@ -70,3 +70,14 @@ Trabalhar com a barra de pesquisa: usar a API para buscar filmes que corresponda
 **Objetivo**
 <br>
 Implementar a lógica de favoritar/desfavoritar um filme e salvar esses dados no Local Storage.
+
+### Dia 6
+<hr>
+
+**Tecnologias**
+- JavaScript
+<br>
+
+**Objetivo**
+<br>
+Implementar a funcionalidade de mostrar apenas os filmes favoritos.
