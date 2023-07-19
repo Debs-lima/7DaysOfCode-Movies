@@ -81,3 +81,16 @@ Implementar a lógica de favoritar/desfavoritar um filme e salvar esses dados no
 **Objetivo**
 <br>
 Implementar a funcionalidade de mostrar apenas os filmes favoritos.
+
+### Dia 7
+<hr>
+
+**Tecnologias**
+- HTML
+- CSS
+- JavaScript
+<br>
+
+**Objetivo**
+<br>
+Refatorar o código.

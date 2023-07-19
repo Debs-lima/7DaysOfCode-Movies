@@ -165,3 +165,8 @@ main {
   color: var(--cinza-descricao);
   line-height: 32px;
 }
+
+.aviso {
+  margin: 150px auto;
+  font-size: 30px;  
+}

@@ -6,7 +6,7 @@ const checkbox = document.querySelector('#favoritos-apenas');
 
 function limparCatalogo() {
   catalogo.innerHTML = '';
-}
+};
 
 /* LISTA POPULARES*/
 async function pegarFilmesPopulares() {
@@ -14,11 +14,11 @@ async function pegarFilmesPopulares() {
   const { results } = await url.json();
   limparCatalogo();
   return await results.forEach(filme => renderizarFilme(filme));
-}
+};
 
 window.onload = async function () {
   pegarFilmesPopulares();
-}
+};
 
 /* LISTA BUSCA*/
 
@@ -26,76 +26,82 @@ async function buscaFilme() {
   const input = pesquisaInput.value;
   const url = await fetch(`https://api.themoviedb.org/3/search/movie?query=${input}&api_key=${apiKey}`);
   const { results } = await url.json();
-  limparCatalogo()
-  return await results.forEach(filme => renderizarFilme(filme))
-}
+  limparCatalogo();
+  return await results.forEach(filme => renderizarFilme(filme));
+};
 
 lupa.addEventListener('click', async () => {
-  pesquisaInput.value != '' ? buscaFilme() : pegarFilmesPopulares()
+  pesquisaInput.value != '' ? buscaFilme() : pegarFilmesPopulares();
 });
 
 pesquisaInput.addEventListener('keydown', async (key) => {
   if (key.keyCode === 13) {
-    pesquisaInput.value != '' ? buscaFilme() : pegarFilmesPopulares()
+    pesquisaInput.value != '' ? buscaFilme() : pegarFilmesPopulares();
   }
 });
 
 /* FAVORITAR */
 function alteraFavorito(evento, filme) {
   if(ehFavorito(filme.id)) {
-    desfavoritar(evento, filme)
+    desfavoritar(evento, filme);
   } else {
-    favoritar(evento, filme)
+    favoritar(evento, filme);
   }
-}
+};
 
 function desfavoritar(evento, filme) {
-    evento.target.src = './icons/Heart.svg'
-    removerDoLocalStorage(filme.id)
-}
+    evento.target.src = './icons/Heart.svg';
+    removerDoLocalStorage(filme.id);
+};
 
 function favoritar(evento, filme) {
-  evento.target.src = './icons/heart-fill.svg'
-  salvarNoLocalStorage(filme)
-}
+  evento.target.src = './icons/heart-fill.svg';
+  salvarNoLocalStorage(filme);
+};
 
 /* LISTA DE FAVORITOS */
 function pegarFilmesFavoritos() {
-  return JSON.parse(localStorage.getItem('filmesFavoritos'))
-}
+  return JSON.parse(localStorage.getItem('filmesFavoritos'));
+};
 
 function salvarNoLocalStorage(filme) {
-  const filmes = pegarFilmesFavoritos() || []
-  filmes.push(filme)
-  const filmesJSON = JSON.stringify(filmes)
-  localStorage.setItem('filmesFavoritos', filmesJSON)
-}
+  const filmes = pegarFilmesFavoritos() || [];
+  filmes.push(filme);
+  const filmesJSON = JSON.stringify(filmes);
+  localStorage.setItem('filmesFavoritos', filmesJSON);
+};
 
 function ehFavorito(id) {
-  const listaFilmes = pegarFilmesFavoritos() || []
-  return listaFilmes.find(filme => filme.id == id)
-}
+  const listaFilmes = pegarFilmesFavoritos() || [];
+  return listaFilmes.find(filme => filme.id == id);
+};
 
 function removerDoLocalStorage(id) {
-  const listaFilmes = pegarFilmesFavoritos() || []
-  const filmeAhRemover = listaFilmes.find(filme => filme.id == id)
-  const novaListaFilmes = listaFilmes.filter(filme => filme.id != filmeAhRemover.id)
-  localStorage.setItem('filmesFavoritos', JSON.stringify(novaListaFilmes))
-}
+  const listaFilmes = pegarFilmesFavoritos() || [];
+  const filmeAhRemover = listaFilmes.find(filme => filme.id == id);
+  const novaListaFilmes = listaFilmes.filter(filme => filme.id != filmeAhRemover.id);
+  localStorage.setItem('filmesFavoritos', JSON.stringify(novaListaFilmes));
+};
 
-/* MOSTRAR APENAS OOS FAVORITOS */
-function meusFavoritos(evento) {
+/* MOSTRAR APENAS OS FAVORITOS */
+function meusFavoritos() {
   if(checkbox.checked) {
-    const listaFilmes = pegarFilmesFavoritos()
+    const listaFilmes = pegarFilmesFavoritos();
+    if(listaFilmes.length == 0) {
+      alert("You don't have any favorite movie yet!");
+      pegarFilmesPopulares();
+      checkbox.checked = false;
+    } 
     limparCatalogo();
     listaFilmes.forEach(filme => renderizarFilme(filme));
+    console.log(listaFilmes);
   } else {
-    limparCatalogo()
-    pegarFilmesPopulares()
+    limparCatalogo();
+    pegarFilmesPopulares();
   }  
 }
 
-checkbox.addEventListener('change', evento => meusFavoritos(evento))
+checkbox.addEventListener('change', meusFavoritos);
 
 /*RENDERIZAR LISTA DE FILMES*/
 function renderizarFilme(filme) {
@@ -153,7 +159,7 @@ function renderizarFilme(filme) {
   const favoritar = document.createElement('span');
   favoritar.textContent = 'Favorite';
   favoritos.appendChild(favoritar);
-  iconeCoracao.addEventListener('click', evento => alteraFavorito(evento, filme))
+  iconeCoracao.addEventListener('click', evento => alteraFavorito(evento, filme));
 
   const filmeDescricao = document.createElement('div');
   filmeDescricao.classList.add('descricao-filme');
@@ -161,7 +167,7 @@ function renderizarFilme(filme) {
   const descricaoDoFilme = document.createElement('p');
   descricaoDoFilme.textContent = overview;
   filmeDescricao.appendChild(descricaoDoFilme);
-}
+};
 
 
 
